@@ -4,6 +4,7 @@ import { nextCookies } from "better-auth/next-js";
 import { db } from "@/db";
 import * as schema from "@/db/schema";
 import { oAuthProxy } from "better-auth/plugins";
+import { trustedOrigins } from "./auth-trusted-origins";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, { provider: "pg", schema }),
@@ -13,6 +14,7 @@ export const auth = betterAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     },
   },
+  trustedOrigins,
   plugins: [
     oAuthProxy({
       productionURL: process.env.PRODUCTION_URL,
